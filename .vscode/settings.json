@@ -1,0 +1,9 @@
+{
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": true,
+    "prettier.singleQuote": true,
+    "prettier.packageManager": "yarn",
+    "prettier.jsxSingleQuote": true,
+    "prettier.jsxBracketSameLine": true,
+    "prettier.htmlWhitespaceSensitivity": "strict"
+}
