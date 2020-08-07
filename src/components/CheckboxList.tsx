@@ -1,19 +1,7 @@
-import React, {ReactNode} from 'react';
-
 import Checkbox from './Checkbox';
+import { CheckboxListProps } from '../interfaces/Interfaces';
+import React from 'react';
 import styled from 'styled-components';
-
-export interface CheckboxListProps {
-	items: {
-		id: string;
-		code: string;
-		label: ReactNode;
-		required: boolean;
-	}[];
-	name: string;
-	value?: string[];
-	onChange: (v: string[]) => void;
-}
 
 const CheckboxCard = styled.div`
     background: #FFFFFF;
@@ -30,24 +18,24 @@ const CompanyName = styled.div`
 `
 
 class CheckboxList extends React.Component<CheckboxListProps> {
-    handleClick = (event) => {
+    handleClick = (event): void => {
         this.props.onChange(event);
     }
     
     render() {
-        const checkboxes = this.props.items.map((item) => 
-                                        <Checkbox key={item.code}
-                                                  label={item.label}
-                                                  value={item.required}
-                                                  onChange={this.handleClick} />
-        );
+        const checkboxes = this.props.items.map(item => (
+			<Checkbox key={item.code} 
+                      label={item.label} 
+                      value={item.required} 
+                      onChange={this.handleClick} />
+		));
 
         return (
-            <CheckboxCard>
-                <CompanyName>{this.props.name}</CompanyName>
-                {checkboxes}
-            </CheckboxCard>
-        )
+			<CheckboxCard>
+				<CompanyName>{this.props.name}</CompanyName>
+				{checkboxes}
+			</CheckboxCard>
+		);
     }
 }
 

@@ -1,3 +1,4 @@
+import { Company, Department } from './interfaces/Interfaces';
 import React, { RefObject } from 'react';
 
 import CheckboxList from './components/CheckboxList';
@@ -34,20 +35,22 @@ class App extends React.Component {
 	componentDidMount() {
 		const companies$ = ajax.getJSON(`http://localhost:3000/companies`).pipe(delay(2000));
 
-		companies$.subscribe((companies: any[]) =>
-			this.setState({
-				companies: companies,
-				loading: false,
-			})
+		companies$.subscribe(
+			companies => this.setState({
+							companies: companies,
+							loading: false,
+						 }),
+			err => console.error(err),
+			() => console.log('complete'),
 		);
 	}
 
-	handleSelectAllClick = value => {
+	handleSelectAllClick = (value: boolean) => {
 		let companies = this.state.companies;
 
-		companies.forEach(company => {
+		companies.forEach((company: Company) => {
 			let departments = company.departments;
-			departments.forEach(d => (d.required = value));
+			departments.forEach((d: Department) => (d.required = value));
 		});
 
 		this.setState({
@@ -59,8 +62,8 @@ class App extends React.Component {
 	handleSingleCheckboxClick = event => {
 		let companies = this.state.companies;
 
-		companies.forEach(company => {
-			company.departments.forEach(d => {
+		companies.forEach((company: Company) => {
+			company.departments.forEach((d: Department) => {
 				if (d.label === event.target.name) d.required = event.target.checked;
 			});
 		});
@@ -71,8 +74,8 @@ class App extends React.Component {
 				allChecked: false,
 			});
 		} else {
-			companies.forEach(company => {
-				company.departments.forEach(dep => {
+			companies.forEach((company: Company) => {
+				company.departments.forEach((dep: Department) => {
 					if (dep.required === true) {
 						this.setState({
 							companies: companies,
@@ -85,8 +88,11 @@ class App extends React.Component {
 	};
 
 	render() {
-		const companiesList = this.state.companies.map((item: any) => {
-			return <CheckboxList key={item.id} name={item.name} items={item.departments} onChange={this.handleSingleCheckboxClick} />;
+		const companiesList = this.state.companies.map((item: Company) => {
+			return <CheckboxList key={item.id} 
+								 name={item.name} 
+								 items={item.departments} 
+								 onChange={this.handleSingleCheckboxClick} />;
 		});
 
 		return (

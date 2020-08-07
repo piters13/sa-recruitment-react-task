@@ -1,11 +1,10 @@
-import { ReactComponent as CheckboxCheckedSVG } from '../assets/checkbox-checked.svg';
-import { ReactComponent as CheckboxSVG } from '../assets/checkbox.svg';
+import CheckboxInput from './CheckboxInput';
 import React from 'react';
 import styled from 'styled-components';
 
 export interface FooterProps {
     allChecked?: boolean;
-    onClick?: (v?: any) => void;
+    onClick: (v?: any) => void;
 }
 
 const StyledFooter = styled.div`
@@ -20,23 +19,6 @@ const StyledFooter = styled.div`
 	padding: 0 30px;
 	z-index: 5;
 	background: #ffffff;
-`;
-
-const CheckSVG = styled(CheckboxSVG)`
-    padding-right: 13px;
-    width: 24px;
-    height: 24px;
-    fill: #CED0D9;
-`
-
-const CheckedSVG = styled(CheckboxCheckedSVG)`
-    padding-right: 13px;
-    width: 24px;
-    height: 24px;
-    fill: #CED0D9;
-    #checkmark {
-        fill: #FF4A55;
-    }
 `
 
 const Button = styled.button`
@@ -58,26 +40,6 @@ const CheckboxWrapper = styled.label`
     align-items: center;
     font-size: 1rem;
 `
-
-const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
-    border: 0;
-    clip: rect(0 0 0 0);
-    clippath: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-`
-
-const CheckboxInput = ({checked, ...props}) => (
-  <>
-    <HiddenCheckbox checked={checked} {...props} />
-    {checked ? <CheckedSVG /> : <CheckSVG />}
-  </>
-)
 
 class Footer extends React.Component<FooterProps> {
     handleChange = event => {
